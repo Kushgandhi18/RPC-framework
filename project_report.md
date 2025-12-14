@@ -2,7 +2,7 @@
 
 **Course**: Operating Systems Programming  
 **Project Type**: Semester End Project  
-**Team Members**: Ruslan Radetskiy, Helly Gandhi, Kush Gandhi, Aditya Prakash 
+**Team Members**: Ruslan Radetskiy, Helly Gandhi, Kush Gandhi, Aditya Prakash
 **Date**: 15th December 2025  
 
 ---

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Mini RPC Framework
 
 A lightweight, production-ready Remote Procedure Call (RPC) framework implemented in C for Unix/Linux systems. This project demonstrates advanced systems programming concepts including socket programming, inter-process communication (IPC), concurrency, and network protocols.
@@ -880,18 +880,15 @@ This is an educational project for academic purposes.
 
 ## 👥 Authors
 
-Helly Gandhi, Kush Gandhi, Aditya Prakash, Ruslan 
-[Course Name] - [Semester/Year]
-[University Name]
+Helly Gandhi, Kush Gandhi, Ruslan Radetskiy , Aditya Prakash 
+System Programming CS551.
+Binghamton University.
 
 ## 🙏 Acknowledgments
 
-- Course instructor and TAs
+- Course Prof. Xin Zhang and TAs (Xindi Guo, Jacob Helhoski)
 - Unix Network Programming by W. Richard Stevens
 - Beej's Guide to Network Programming
 - POSIX Threads Programming tutorial
 
 ---
-=======
-# RPC-framework
->>>>>>> fdcd7cdd6980d358d524aef9f501ace44d379d78
