@@ -58,7 +58,7 @@ int send_message(int sockfd, const MessageHeader *header, const void *payload)
     {
         size_t total_sent = 0;
         const uint8_t * data = (const uint8_t *)payload;
-        while (total_sent < heder - > payload_length)
+        while (total_sent < header -> payload_length)
         {
             sent = send(sockfd, data + total_sent, header->payload_length - total_sent, 0);
             if(sent <= 0)
@@ -91,7 +91,9 @@ int recv_message(int sockfd, MessageHeader *header, void *payload, size_t max_pa
         uint8_t * payload_buf = (uint8_t *)payload;
         while(total_received < header->payload_length)
         {
-            ssize_t received = recv(sockfd, payload_buf + totalreceived, header->payload_length - total_received, 0);
+            ssize_t received = recv(sockfd, payload_buf + total_received,
+                header->payload_length - total_received, 0);
+
             if(received <= 0)
                 return -1;
             total_received += received;
