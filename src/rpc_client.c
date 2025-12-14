@@ -8,6 +8,8 @@
 
 #define BUFFER_SIZE 4096
 
+// Initialize RPC client and establish connection to server
+
 int rpc_client_init(const char *server_ip, int port) {
     if (client_connect(server_ip, port) != 0) {
         printf("[RPC Client] Failed to connect to server\n");
@@ -18,6 +20,8 @@ int rpc_client_init(const char *server_ip, int port) {
     return 0;
 }
 
+// Make a remote procedure call to the server
+
 char* rpc_call(const char *func_name, const char *params) {
     if (func_name == NULL) {
         printf("[RPC Client] Function name cannot be NULL\n");
@@ -26,7 +30,6 @@ char* rpc_call(const char *func_name, const char *params) {
     
     Message request;
     request.func_name = strdup(func_name);
-
     request.params = (char*)params;
     
     char *request_buffer = serialize_message(&request);
@@ -79,6 +82,8 @@ char* rpc_call(const char *func_name, const char *params) {
     
     return result;
 }
+
+//Disconnect from RPC server and cleanup
 
 void rpc_client_disconnect() {
     client_disconnect();
