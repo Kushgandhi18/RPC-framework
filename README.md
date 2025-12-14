@@ -880,9 +880,7 @@ This is an educational project for academic purposes.
 
 ## 👥 Authors
 
-Helly Gandhi, Kush Gandhi, Ruslan Radetskiy , Aditya Prakash 
-System Programming CS551.
-Binghamton University.
+Helly Gandhi, Kush Gandhi, Ruslan Radetskiy , Aditya Prakash
 
 ## 🙏 Acknowledgments
 
