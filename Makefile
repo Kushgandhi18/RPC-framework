@@ -1,61 +1,92 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -pthread -I./include
+# ======================================================
+# Mini RPC Framework - Makefile
+# ======================================================
+
+CC      = gcc
+CFLAGS  = -Wall -Wextra -pthread -I./include
 LDFLAGS = -pthread
 
-SRC_DIR = src 
-INC_DIR = include
+SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
 
-COMMAN_SRC = $(SRC_DIR)/protocol.c $(SRC_DIR)/registry.c
-SERVER_SRC = $(SRC_DIR)/rpc_server.c $(SRC_DIR)/demo_server.c
-CLIENT_SRC = $(SRC_DIR)/rpc_client.c $(SRC_DIR)/demo_client.c
+# ------------------------------------------------------
+# Object files
+# ------------------------------------------------------
 
-COMMON_OBJ = $(OBJ_DIR)/protocol.o $(OBJ_DIR)/registry.o
-SERVER_OBJ = $(OBJ_DIR)/rpc_server.o $(OBJ_DIR)/demo_server.o
-CLIENT_OBJ = $(OBJ_DIR)/rpc_client.o $(OBJ_DIR)/demo_client.o
+COMMON_OBJ = \
+	$(OBJ_DIR)/protocol.o \
+	$(OBJ_DIR)/dl_handler.o \
+	$(OBJ_DIR)/message_handler.o \
+	$(OBJ_DIR)/server.o \
+	$(OBJ_DIR)/client.o
+
+SERVER_OBJ = \
+	$(OBJ_DIR)/rpc_server.o \
+	$(OBJ_DIR)/demo_server.o
+
+CLIENT_OBJ = \
+	$(OBJ_DIR)/rpc_client.o \
+	$(OBJ_DIR)/demo_client.o
+
+# ------------------------------------------------------
+# Binaries
+# ------------------------------------------------------
 
 SERVER_BIN = $(BIN_DIR)/rpc_server
 CLIENT_BIN = $(BIN_DIR)/rpc_client
 
-.PHONY: all clean server client directories
+# ------------------------------------------------------
+# Phony targets
+# ------------------------------------------------------
 
-all: directories server client
-directories:
-	@mkdir -p $(OBJ_DIR) $(BIN_DIR)
+.PHONY: all server client clean run-server run-client install help
+
+# ------------------------------------------------------
+# Default target
+# ------------------------------------------------------
+
+all: server client
+
+# ------------------------------------------------------
+# Build rules
+# ------------------------------------------------------
+
 server: $(SERVER_BIN)
 client: $(CLIENT_BIN)
 
-$(SERVER_BIN): $(COMMON_OBJ) $(SERVER_OBJ)
+$(SERVER_BIN): $(COMMON_OBJ) $(SERVER_OBJ) | $(BIN_DIR)
 	$(CC) $(LDFLAGS) -o $@ $^
-	@echo "Server built successfully!"
-$(CLIENT_BIN): $(COMMON_OBJ) $(CLIENT_OBJ)
+	@echo "✔ Server built"
+
+$(CLIENT_BIN): $(COMMON_OBJ) $(CLIENT_OBJ) | $(BIN_DIR)
 	$(CC) $(LDFLAGS) -o $@ $^
-	@echo "Client built successfully"
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@echo "✔ Client built"
+
+# Compile any .c file in src/ into obj/
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+# ------------------------------------------------------
+# Directories
+# ------------------------------------------------------
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+# ------------------------------------------------------
+# Utility targets
+# ------------------------------------------------------
+
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
-	@echo "Cleaned build files"
-install all:
-	@echo "Installing to /usr/local/bin..."
-	@sudo cp $(SERVER_BIN) /usr/local/bin/
-	@sudo cp #(CLIENT_BIN) /usr/local/bin/
-	@echo "Installing complete!"
+	@echo "✔ Cleaned build files"
 
 run-server: server
 	$(SERVER_BIN)
+
 run-client: client
 	$(CLIENT_BIN)
-help:
-	@echo "Mint RPC Framework - Makefile"
-	@echo ""
-	@echo "Targets:"
-	@echo "all - 		Build both server and client (default)"
-	@echo "server - 	Build server only"
-	@echo "client - 	Build client only"
-	@echo "clean -		Remove build artifacts"
-	@echo "run-server - Build and run server"
-	@echo "run-client - Build and run client"
-	@echo "install - 	Intall binaries to /usr/local/bin"
-	@echo "help - 		Show this help message"

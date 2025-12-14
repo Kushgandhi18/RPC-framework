@@ -2,6 +2,7 @@
 #include <dlfcn.h>
 #include <string.h>
 #include <stdlib.h>
+#include "dl_handler.h"
 
 void *dl_handler = NULL;
 struct RegisteryList *funcs = NULL;
@@ -32,7 +33,7 @@ struct Registery *create_registery_node(const char *n, void *f){
 
 struct RegisteryList *create_function_registery(struct Registery *head){
     struct RegisteryList *ret_item = malloc(sizeof(struct RegisteryList));
-     if(funcs = NULL){
+    if (ret_item == NULL){
         printf("Error unable to allocate new memory to create function registry list\n");
         return NULL;
     }

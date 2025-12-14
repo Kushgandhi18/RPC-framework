@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dlfcn.h>
+#include <stdint.h>
 #include "rpc_server.h"
 #include "server.h"
 #include "message_handler.h"

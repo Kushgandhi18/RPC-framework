@@ -1,0 +1,12 @@
+obj/client.o
+obj/demo_client.o
+obj/demo_server.o
+obj/dl_handler.o
+obj/message_handler.o
+obj/protocol.o
+obj/rpc_client.o
+obj/rpc_server.o
+obj/server.o
+bin/rpc_server
+bin/rpc_client
+bin/libexample.so
