@@ -22,16 +22,16 @@ int client_connect(const char* server_ip, int port) {
     }
     
     memset(&server_addr, 0, sizeof(server_addr));
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(port);
-    
+    server_addr.sin_family = AF_INET;// IPv4
+    server_addr.sin_port = htons(port);             
+
     if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) {
         perror("Invalid address or address not supported");
         close(client_socket);
         client_socket = -1;
         return -1;
     }
-    
+
     if (connect(client_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         perror("Connection failed");
         close(client_socket);
@@ -40,11 +40,11 @@ int client_connect(const char* server_ip, int port) {
     }
     
     printf("[Client] Connected to %s:%d\n", server_ip, port);
-    
     return 0;
 }
 
 int client_send(const char* data, size_t len) {
+    // Validate connection and parameters
     if (client_socket < 0) {
         printf("Error: Client not connected\n");
         return -1;
@@ -54,6 +54,7 @@ int client_send(const char* data, size_t len) {
         return -1;
     }
     
+    // Loop to handle partial sends (send() may not send all data at once)
     size_t total_sent = 0;
     while (total_sent < len) {
         ssize_t sent = send(client_socket, data + total_sent, len - total_sent, 0);
@@ -67,7 +68,9 @@ int client_send(const char* data, size_t len) {
     return total_sent;
 }
 
+
 int client_receive(char* buffer, size_t buffer_size) {
+    // Validate connection and parameters
     if (client_socket < 0) {
         printf("Error: Client not connected\n");
         return -1;
@@ -77,12 +80,15 @@ int client_receive(char* buffer, size_t buffer_size) {
         return -1;
     }
     
+    // Blocking receive call
     ssize_t received = recv(client_socket, buffer, buffer_size, 0);
+    
     if (received < 0) {
         perror("Error receiving data");
         return -1;
     }
     
+    // recv() returns 0 when the remote side closes the connection gracefully
     if (received == 0) {
         printf("[Client] Connection closed by server\n");
     }
@@ -93,7 +99,7 @@ int client_receive(char* buffer, size_t buffer_size) {
 void client_disconnect() {
     if (client_socket >= 0) {
         close(client_socket);
-        client_socket = -1;
+
         printf("[Client] Disconnected\n");
     }
 }
