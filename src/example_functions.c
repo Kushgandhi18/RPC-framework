@@ -20,10 +20,13 @@ char* echo(const char *msg)
 char* reverse(const char *msg)
 {
     if (!msg) return NULL;
+
     size_t len = strlen(msg);
     char *out = malloc(len + 1);
+
     for (size_t i = 0; i < len; i++)
         out[i] = msg[len - 1 - i];
+
     out[len] = '\0';
     return out;
 }
@@ -31,8 +34,11 @@ char* reverse(const char *msg)
 char* uppercase(const char *msg)
 {
     if (!msg) return NULL;
+
     char *out = strdup(msg);
     for (size_t i = 0; out[i]; i++)
-        out[i] = toupper(out[i]);
+        out[i] = toupper((unsigned char)out[i]);
+
     return out;
 }
+

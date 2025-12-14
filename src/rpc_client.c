@@ -24,7 +24,8 @@ char* rpc_call(const char *func_name, const char *params) {
     }
     
     Message request;
-    request.func_name = func_name;
+    request.func_name = strdup(func_name);
+
     request.params = (char*)params;
     
     char *request_buffer = serialize_message(&request);
