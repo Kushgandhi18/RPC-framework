@@ -72,7 +72,7 @@ mini-rpc/
 ├── obj/                     # Object files (generated)
 ├── bin/                     # Executables (generated)
 ├── Makefile                 # Build system
-└── README.md               # This file
+└── README.md                # This file
 ```
 
 ## 🚀 Installation
